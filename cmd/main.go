@@ -11,17 +11,16 @@ import (
 
 func main() {
 	var rootCmd = &cobra.Command{
-		Use: "nctl",
+		Use:   "nctl",
 		Short: "A comprehensive network CLI tool",
-		Long: "net is a powerful command-line interface for network diagnostics, configuration, and management",
+		Long:  "net is a powerful command-line interface for network diagnostics, configuration, and management",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
-		
 	}
 
 	// 挂载 iface 系列命令
-	iface.RegisterCommands(rootCmd)
+	iface.RegisterIfaceCommands(rootCmd)
 
 	// 执行根命令
 	if err := rootCmd.Execute(); err != nil {
