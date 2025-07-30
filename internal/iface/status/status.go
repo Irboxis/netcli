@@ -4,8 +4,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RegisterStatusCommands(rootCmd *cobra.Command) {
-	var statusCmd = &cobra.Command{
+func Status() *cobra.Command {
+	cmd := &cobra.Command{
 		Use:   "status",
 		Short: "Network interface state management",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -13,8 +13,8 @@ func RegisterStatusCommands(rootCmd *cobra.Command) {
 		},
 	}
 
-	statusCmd.AddCommand(up())
-	statusCmd.AddCommand(down())
-	statusCmd.AddCommand(disable())
-	statusCmd.AddCommand(enable())
+	cmd.AddCommand(up())
+	cmd.AddCommand(down())
+
+	return cmd
 }

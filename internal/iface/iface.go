@@ -23,5 +23,5 @@ func RegisterIfaceCommands(rootCmd *cobra.Command) {
 	// 挂载 iface list 命令
 	ifaceCmd.AddCommand(list.List())
 	// 挂载 iface status 系列命令
-	status.RegisterStatusCommands(ifaceCmd)
+	ifaceCmd.AddCommand(status.Status())
 }
