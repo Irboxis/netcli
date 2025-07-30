@@ -5,7 +5,6 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/go-ole/go-ole"
 	"github.com/spf13/cobra"
 	"github.com/vishvananda/netlink"
 )
@@ -35,8 +34,8 @@ func runUP(ifaceName []string) {
 		linuxUp(ifaceName)
 	case "windows":
 		windowsUp(ifaceName)
-	case "darwin":
-		macosUp(ifaceName)
+	// case "darwin":
+	// 	macosUp(ifaceName)
 	default:
 		fmt.Fprintf(os.Stderr, "未知的操作系统")
 	}
@@ -60,13 +59,5 @@ func linuxUp(ifaceName []string) {
 
 // Windows端操作函数，使用WMI实现
 func windowsUp(ifaceName []string) {
-	// 初始化 COM
-	err := ole.CoInitializeEx(0, ole.COINIT_APARTMENTTHREADED)
-	if err != nil && err != syscall.S_FALSE {
-
-	}
-}
-
-func macosUp(ifaceName []string) {
-
+	fmt.Println("aaa")
 }
