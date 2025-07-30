@@ -62,11 +62,8 @@ func List() *cobra.Command {
 	return cmd
 }
 
-func getInterfaceInfo(cmd *cobra.Command, iface net.Interface) (*InterfaceInfo, error) {
-	ip4gw, ip6gw, err := utils.GetGW(&iface)
-	if err != nil {
-		fmt.Fprintf(cmd.ErrOrStderr(), "%v", err)
-	}
+func getInterfaceInfo(iface net.Interface) (*InterfaceInfo, error) {
+	ip4gw, ip6gw := utils.GetGW(&iface)
 
 	info := &InterfaceInfo{
 		Name:               iface.Name,
@@ -116,7 +113,7 @@ func processInterfaces(cmd *cobra.Command, allInterfaces []net.Interface, target
 		if targetNames != nil && !targetNames[iface.Name] {
 			continue
 		}
-		info, err := getInterfaceInfo(cmd, iface)
+		info, err := getInterfaceInfo(iface)
 		if err != nil {
 			fmt.Fprintf(cmd.ErrOrStderr(), "处理接口 %s 信息时出错: %v\n", iface.Name, err)
 			continue
