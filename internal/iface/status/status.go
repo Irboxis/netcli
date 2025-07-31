@@ -36,7 +36,7 @@ func up() *cobra.Command {
 				return
 			}
 
-			run(args, true)
+			RunStatus(args, true)
 		},
 	}
 
@@ -55,14 +55,14 @@ func down() *cobra.Command {
 				return
 			}
 
-			run(args, false)
+			RunStatus(args, false)
 		},
 	}
 
 	return cmd
 }
 
-func run(ifacesName []string, enable bool) {
+func RunStatus(ifacesName []string, enable bool) {
 	action := "DOWN"
 	if enable {
 		action = "UP"
@@ -76,14 +76,14 @@ func run(ifacesName []string, enable bool) {
 		case "windows":
 			err = toggleWindowsInterface(name, enable)
 		default:
-			fmt.Printf("操作系统 %s 不支持对网络接口 %s 的 %s 操作。\n", runtime.GOOS, name, action)
+			fmt.Printf("OS %s does not support the %s operation on the interface %s\n", runtime.GOOS, name, action)
 			continue
 		}
 
 		if err != nil {
-			fmt.Printf("对网络接口 %s 进行 %s 操作失败: %v\n", name, action, err)
+			fmt.Printf("operation %s failed on interface %s: %v\n", name, action, err)
 		} else {
-			fmt.Printf("网络接口 %s 已成功 %s。\n", name, action)
+			fmt.Printf("interface %s has successfully %s\n", name, action)
 		}
 	}
 }
@@ -92,7 +92,7 @@ func run(ifacesName []string, enable bool) {
 func toggleLinuxInterface(name string, enable bool) error {
 	link, err := netlink.LinkByName(name)
 	if err != nil {
-		return fmt.Errorf("查找网络接口 %s 失败: %v", name, err)
+		return fmt.Errorf("failed to find network interface %s: %v", name, err)
 	}
 
 	if enable {
@@ -102,7 +102,7 @@ func toggleLinuxInterface(name string, enable bool) error {
 	}
 
 	if err != nil {
-		return fmt.Errorf("设置网络接口 %s 状态失败: %v", name, err)
+		return fmt.Errorf("failed to set network interface %s status: %v", name, err)
 	}
 	return nil
 }
