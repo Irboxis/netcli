@@ -2,6 +2,7 @@ package iface
 
 import (
 	"nctl/internal/iface/list"
+	"nctl/internal/iface/set"
 	"nctl/internal/iface/status"
 
 	"github.com/spf13/cobra"
@@ -24,4 +25,5 @@ func RegisterIfaceCommands(rootCmd *cobra.Command) {
 	ifaceCmd.AddCommand(list.List())
 	// 挂载 iface status 系列命令
 	ifaceCmd.AddCommand(status.Status())
+	ifaceCmd.AddCommand(set.SetC())
 }
