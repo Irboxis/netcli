@@ -34,29 +34,15 @@ func SetC() *cobra.Command {
 				flagCount++
 			}
 
-			// 检查是否存在状态关键字，并检查唯一性
-			if flagCount > 1 {
-				fmt.Fprintf(os.Stderr, "There can only be one state management (UP, DOWN, RESET)\n")
-				return
-			}
-
-			// 检查是否存在 setIP 中规定的关键字
-			configAddrCount := len(setIP) > 0 || len(setDNS) > 0 || setGW != ""
-
-			if flagCount == 0 && !configAddrCount {
+			if flagCount == 0 {
 				cmd.Help()
 				return
 			}
 
-			if configAddrCount {
-				// setadd 或 serdel 标志必须搭配 setip 或 setdns 使用
-				if (setADD || setDEL) && len(setIP) == 0 && len(setDNS) == 0 {
-					fmt.Fprintf(os.Stderr, "The --add or --del flag must be used with --ip or --dns\n")
-					cmd.Help()
-					return
-				}
-
-				runAddrs(ifaceName)
+			// 检查是否存在状态关键字，并检查唯一性
+			if flagCount > 1 {
+				fmt.Fprintf(os.Stderr, "There can only be one state management (UP, DOWN, RESET)\n")
+				return
 			}
 
 			if setUp {
@@ -66,6 +52,9 @@ func SetC() *cobra.Command {
 			} else if setReset {
 				setResetFunc(ifaceName)
 			}
+
+			// 有关 ip 地址的逻辑
+			runAddrs(ifaceName, cmd)
 		},
 	}
 
