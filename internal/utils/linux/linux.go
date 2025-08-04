@@ -1,12 +1,14 @@
-//go: build linux
+//go:build linux
 
 package linux
 
-import "nctl/internal/utils"
+import (
+	"nctl/interfaces"
+)
 
 type UnixNctl struct{}
 
 // 工厂函数
-func NewNctltools() utils.Ifaces {
+func Iface() interfaces.Ifaces {
 	return &UnixNctl{}
 }

@@ -73,7 +73,7 @@ func SetC() *cobra.Command {
 }
 
 func RunSet(ifaceName string, enable bool) {
-	ifaceUtils := utils.NewNctlUtils()
+	ifaceUtils := utils.IfaceUtils()
 	if err := ifaceUtils.IsExistingIface(ifaceName); err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return
